@@ -10,7 +10,7 @@ if arg[#arg] == "-debug" then require("mobdebug").start() end
 
 -- module
 local suit = require 'suit'
-
+local database = require 'database'
 --table list
 data = {}
 pC = { "vet01",
@@ -20,15 +20,17 @@ pC = { "vet01",
        "hair.cut",
        "hair.color",}
 --local
-local debug = true
+local debug = false
 local menu_courant = "start_menu" -- "start_menu", "create_character"
 local lock = ""
+local quit = true
 -- Suit local
 local show_message = 0
 local checkbox ={checked = true,text = "hello world!"}
 local input = {text = ""}
 
 function love.load()
+  database.load()
   dataReload()
   largeur = love.graphics.getWidth()
   hauteur = love.graphics.getHeight()
@@ -183,14 +185,29 @@ suit.Input(input,543,638,132,36)
     end
 end
 
+function love.quit()
+love.event.quit()
+    if quit then
+        print("We are not ready to quit yet!")
+        quit = not quit
+    else
+        print("Thanks for playing. Please play again soon!")
+        return quit
+    end
+    return true
+end
+
 function updateStartMenu(dt)
   suit.Button("<=",872,563,69,54)
   suit.Button("Load",948,563,108,54)
   suit.Button("=>",1061,563,74,54)
-  if suit.Button("New",949,633,108,54).hit then
+  if suit.Button("New",1032,633,108,54).hit then
   dataReload()
   menu_courant = "create_character"
-  end
+end
+if suit.Button("quit",867,633,108,54).hit then
+love.quit()
+end
   suit.Button("",{id=1},873,166,259,48)
   suit.Button("",{id=2},873,220,259,48)
   suit.Button("",{id=3},873,275,259,48)
@@ -228,6 +245,8 @@ function color(n)
   love.graphics.setColor(0,150,200)
   elseif n == 3 then
    love.graphics.setColor(0,0,0)
+ elseif n == 4 then
+   love.graphics.setColor(255,255,255)
    end
 end
 
@@ -250,14 +269,22 @@ color( 1 )
 love.graphics.rectangle("fill",947,562,110,55)
 color( 2 )
 love.graphics.rectangle("line",947,562,110,55)
+--quit
 color( 1 ) 
-love.graphics.rectangle("fill",947,632,110,55)
+love.graphics.rectangle("fill",867,633,108,57)
 color( 2 ) 
-love.graphics.rectangle("line",947,632,110,55)
+love.graphics.rectangle("line",867,633,108,57)
+--new
+color( 1 ) 
+love.graphics.rectangle("fill",1032,633,108,57)
+color( 2 ) 
+love.graphics.rectangle("line",1032,633,108,57)
+--statistique
 color( 1 )
 love.graphics.rectangle("fill",92,304,307,211,10,10)
 color( 2 )
 love.graphics.rectangle("line",92,304,307,211,10,10)
+----
 love.graphics.rectangle("fill",92,324,307,6)
 love.graphics.rectangle("fill",92,357,307,6)
 love.graphics.rectangle("fill",92,487,307,6)
@@ -360,6 +387,7 @@ function love.draw()
    drawBackGuiCharacterCreate()
    suit.draw()
  end
+database.draw()
  drawDebug()
 end
   
