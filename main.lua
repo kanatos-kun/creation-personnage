@@ -20,9 +20,9 @@ pC = { "vet01",
        "hair.cut",
        "hair.color",}
 --local
-local debug = false
+local debug = true
 local menu_courant = "start_menu" -- "start_menu", "create_character"
-local lock = ""
+lock = ""
 local quit = true
 -- Suit local
 local show_message = 0
@@ -136,7 +136,7 @@ if suit.isHit(13) or suit.isHit(14) or
         if suit.isHit(17) then data[lock] = "cyan" end
         if suit.isHit(18) then data[lock] = "turquoise" end
         if suit.isHit(19) then data[lock] = "vert" end
-        if suit.isHit(20) then data[lock] = "vert-jaune" end
+        if suit.isHit(20) then data[lock] = "vert-limon" end
         if suit.isHit(21) then data[lock] = "jaune" end
         if suit.isHit(22) then data[lock] = "orange" end
         if suit.isHit(23) then data[lock] = "marron" end
@@ -148,11 +148,13 @@ if suit.isHit(13) or suit.isHit(14) or
 end
 -- bouton retour et accepter
 if suit.Button("Retour",{id = 1},827,640,133,34).hit then
+dataReload()
 menu_courant = "start_menu"
 end
 if suit.Button("Accepter",998,640,133,34).hit then
 -- sauvegarde des données
 data.name = input.text
+dataReload()
 menu_courant = "start_menu"
 end
 -- Bouton statistique
@@ -247,7 +249,43 @@ function color(n)
    love.graphics.setColor(0,0,0)
  elseif n == 4 then
    love.graphics.setColor(255,255,255)
-   end
+ elseif n == "rouge" then
+   --rouge
+   love.graphics.setColor(237,22,11)
+ elseif n == "violet" then
+   --violet
+   love.graphics.setColor(189,22,201)
+ elseif n == "marin" then 
+   --marin
+   love.graphics.setColor(19,62,87)
+ elseif n == "bleu" then 
+   --bleu
+   love.graphics.setColor(31,21,232)
+ elseif n == "cyan" then 
+   --cyan
+   love.graphics.setColor(33,197,227)
+ elseif n == "turquoise" then 
+   --turquoise
+   love.graphics.setColor(33,227,167)
+ elseif n == "vert" then 
+   --vert
+   love.graphics.setColor(23,207,62)
+ elseif n == "vert-limon" then 
+   --vert-limon
+   love.graphics.setColor(181,218,24)
+ elseif n == "jaune" then 
+   --jaune
+   love.graphics.setColor(235,218,24)
+ elseif n == "orange" then 
+   --orange
+   love.graphics.setColor(221,125,23)
+ elseif n == "marron" then 
+   --marron
+   love.graphics.setColor(106,66,31)
+ elseif n == "gris" then 
+   --gris
+   love.graphics.setColor(126,126,126)
+  end
 end
 
 function drawBackGuiStartMenu()
