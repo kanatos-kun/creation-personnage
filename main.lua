@@ -20,6 +20,34 @@ pC = { "vet01",
        "hair.cut",
        "hair.color",}
 --local
+local imgDrawBackGUIChara = love.graphics.newImage("images/backGUI_character.png")
+local imgButton = {
+  sex_women = {
+              (love.graphics.newImage("images/bouton_fem.png")),
+              (love.graphics.newImage("images/bouton_hover_fem.png"))
+              },
+  sex_men   = {
+              (love.graphics.newImage("images/bouton_male.png")),
+              (love.graphics.newImage("images/bouton_hover_male.png"))
+              },
+  knight    = {
+              (love.graphics.newImage("images/bouton_knight.png")),
+              (love.graphics.newImage("images/bouton_hover_knight.png")),
+              },
+  archer    = {
+              (love.graphics.newImage("images/bouton_archer.png")),
+              (love.graphics.newImage("images/bouton_hover_archer.png")),
+              },
+  mage      = {
+               (love.graphics.newImage("images/bouton_mage.png")),
+               (love.graphics.newImage("images/bouton_hover_mage.png")),
+               },
+  pretre    = {
+               (love.graphics.newImage("images/bouton_pretre.png")),
+               (love.graphics.newImage("images/bouton_hover_pretre.png")),
+              }
+}
+
 local debug = true
 local menu_courant = "start_menu" -- "start_menu", "create_character"
 lock = ""
@@ -58,28 +86,28 @@ data = {
 end
 
 function updateCreateCharacter(dt)
- 
-  if suit.Button("Guerrier", 56, 147, 58, 56).hit then
-    data.class = "guerrier"
+   color ( 4 )
+  if suit.ImageButton(imgButton.knight[1],{hovered = imgButton.knight[2]}, 59, 150).hit then
+    data.class = "chevalier"
     show_message = 1
   end
-  if suit.Button("Archer", 125, 147, 58, 56).hit then
+  if suit.ImageButton(imgButton.archer[1],{hovered = imgButton.archer[2]}, 128, 150).hit then
     data.class = "archer"
     show_message = 2
   end
-  if suit.Button("Mage", 190, 147, 58, 56).hit then
+  if suit.ImageButton(imgButton.mage[1],{hovered = imgButton.mage[2]}, 198, 150).hit then
     data.class = "mage"
     show_message = 3
   end
-  if suit.Button("Prêtre", 259, 147, 58, 56).hit then
-    data.class = "prêtre"
+  if suit.ImageButton(imgButton.pretre[1],{hovered = imgButton.pretre[2]}, 268, 150).hit then
+    data.class = "pretre"
     show_message = 4
   end
-  if suit.Button("Homme", 111, 43, 71, 56).hit then
+  if suit.ImageButton(imgButton.sex_men[1],{hovered =imgButton.sex_men[2]}, 104, 36).hit then
     data.sex = "homme"
     show_message = 5
   end
-    if suit.Button("Femme", 202, 43, 71, 56).hit then
+    if suit.ImageButton(imgButton.sex_women[1],{hovered =imgButton.sex_women[2]}, 197, 36).hit then
     data.sex = "femme"
     show_message = 6
   end
@@ -339,60 +367,9 @@ love.graphics.print("Character",979,141)
 end
 
 function drawBackGuiCharacterCreate()
--- Draw rectangle GUI 
-love.graphics.setLineWidth( 5 )
-color(1)
-love.graphics.rectangle("fill",23,110,339,116)
-color(2)
-love.graphics.rectangle("line",23,110,339,116)
-color(1)
-love.graphics.rectangle("fill",23,241,338,460)
-color(2)
-love.graphics.rectangle("line",23,241,338,460)
-color(1)
-love.graphics.rectangle("fill",106,40,80,60)
-color(2)
-love.graphics.rectangle("line",106,40,80,60)
-color(1)
-love.graphics.rectangle("fill",198,40,80,60)
-color(2)
-love.graphics.rectangle("line",198,40,80,60)
-color(1)
-love.graphics.rectangle("fill",532,634,154,44)
-color(2)
-love.graphics.rectangle("line",532,634,154,44)
-color(1)
-love.graphics.rectangle("fill",833,250,306,196)
-color(2)
-love.graphics.rectangle("line",833,250,306,196)
-color(1)
-love.graphics.rectangle("fill",821,636,143,43)
-color(2)
-love.graphics.rectangle("line",821,636,143,43)
-color(1)
-love.graphics.rectangle("fill",992,636,143,43)
-color(2)
-love.graphics.rectangle("line",992,636,143,43)
-love.graphics.rectangle("fill",30,133,324,5)
-love.graphics.rectangle("fill",30,273,324,5)
-love.graphics.rectangle("fill",30,455,324,5)
-love.graphics.rectangle("fill",30,485,324,5)
-love.graphics.rectangle("fill",845,284,283,4)
-
--- Draw Text
-color(3)
-love.graphics.print("Classe",160,114)
-love.graphics.print("Customisation",150,253)
-love.graphics.print("Couleur",157,464)
-love.graphics.print("Statistique",941,255)
-love.graphics.print("Force : ",863,293)
-love.graphics.print("Intelligence : ",863,311)
-love.graphics.print("Agilité : ",863,333)
-love.graphics.print("Dexterité : ",863,354)
-love.graphics.print("Endurance : ",863,375)
-love.graphics.print("Points restants : ",871,409)
-love.graphics.print("Retour",875,648)
-love.graphics.print("Accepter",1032,648)
+-- Draw GUI 
+color ( 4 )
+love.graphics.draw(imgDrawBackGUIChara,0,0)
 end
 
 function drawDebug()
