@@ -9,7 +9,7 @@ love.graphics.setDefaultFilter("nearest")
 if arg[#arg] == "-debug" then require("mobdebug").start() end
 
 -- module
-local suit = require 'suit'
+local suit = require 'Suit'
 local database = require 'database'
 --table list
 data = {}
