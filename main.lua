@@ -47,8 +47,8 @@ local imgButton = {
                (love.graphics.newImage("images/bouton_hover_pretre.png")),
               }
 }
-
-local debug = true
+local button_state = "" --"face", "outfit","nose","mouth","hairCut","eye"
+local debug = false
 local menu_courant = "start_menu" -- "start_menu", "create_character"
 lock = ""
 local quit = true
@@ -112,43 +112,48 @@ function updateCreateCharacter(dt)
     show_message = 6
   end
   -- customisation 
-suit.Button("Cheveux",100,299,57,60) 
+suit.Button("corps",100,299,57,60) 
 
-if suit.Button("Vetement 1",168,299,57,60).hit then
+if suit.Button("face",168,299,57,60).hit then
 lock = "vet01"
 end
 
-if suit.Button("Vetement 2",234,299,57,60).hit then
+if suit.Button("vetement",234,299,57,60).hit then
 lock = "vet02"
 end
 
-if suit.Button("Vetement 3",100,365,57,60).hit then
-lock = "vet03"
-end
+-- Si on clique sur le bouton vetement---------------
+if button_state == "outfit" then
+  if suit.Button("vetement",100,365,57,60).hit then
+  lock = "vet03"
+  end
 
-if suit.Button("Vetement 4",170,365,57,60).hit then
-lock = "vet04"
+  if suit.Button("Vetement 4",170,365,57,60).hit then
+  lock = "vet04"
+  end
 end
+-----------------------------------------------------
 
-suit.Button("Retour",{id= 2},234,365,57,60)
+-- suit.Button("Retour",{id= 2},234,365,57,60) 
 
 -- couleur
-if suit.Button("Rouge",{id=13},61,496,57,60).hit then
+if button_state == "" then
+else
+suit.Button("Rouge",{id=13},61,496,57,60) --rouge
+suit.Button("Violet",{id=14},130,496,57,60) --violet
+suit.Button("Marin",{id=15},195,496,57,60) -- marin
+suit.Button("bleu",{id=16},263,496,57,60) -- bleu
+
+suit.Button("Cyan",{id=17},61,562,57,60) -- cyan
+suit.Button("Turquoise",{id=18},130,562,57,60) -- turquoise
+suit.Button("vert",{id=19},195,562,57,60) -- vert
+suit.Button("vert-limon",{id=20},263,562,57,60) -- vert-jaune
+
+suit.Button("jaune",{id=21},61,627,57,60) -- jaune
+suit.Button("orange",{id=22},130,627,57,60) -- orange
+suit.Button("marron",{id=23},195,627,57,60) -- marron
+suit.Button("gris",{id=24},263,627,57,60) -- gris
 end
-suit.Button("Violet",{id=14},130,496,57,60)
-suit.Button("Marin",{id=15},195,496,57,60)
-suit.Button("bleu",{id=16},263,496,57,60)
-
-suit.Button("Cyan",{id=17},61,562,57,60)
-suit.Button("Turquoise",{id=18},130,562,57,60)
-suit.Button("vert",{id=19},195,562,57,60)
-suit.Button("vert-jaune",{id=20},263,562,57,60)
-
-suit.Button("jaune",{id=21},61,627,57,60)
-suit.Button("orange",{id=22},130,627,57,60)
-suit.Button("marron",{id=23},195,627,57,60)
-suit.Button("gris",{id=24},263,627,57,60)
-
 if suit.isHit(13) or suit.isHit(14) or
    suit.isHit(15) or suit.isHit(16) or
    suit.isHit(17) or suit.isHit(18) or
@@ -157,18 +162,18 @@ if suit.isHit(13) or suit.isHit(14) or
    suit.isHit(23) or suit.isHit(24) then
   for n = 1,#pC do 
       while pC[n] == lock do
-        if suit.isHit(13) then data[lock] = "rouge" end
-        if suit.isHit(14) then data[lock] = "violet" end
-        if suit.isHit(15) then data[lock] = "marin" end
-        if suit.isHit(16) then data[lock] = "bleu" end
-        if suit.isHit(17) then data[lock] = "cyan" end
-        if suit.isHit(18) then data[lock] = "turquoise" end
-        if suit.isHit(19) then data[lock] = "vert" end
-        if suit.isHit(20) then data[lock] = "vert-limon" end
-        if suit.isHit(21) then data[lock] = "jaune" end
-        if suit.isHit(22) then data[lock] = "orange" end
-        if suit.isHit(23) then data[lock] = "marron" end
-        if suit.isHit(24) then data[lock] = "gris" end
+        if suit.isHit(13) then data[lock] = 13 end --rouge
+        if suit.isHit(14) then data[lock] = 14 end --violet
+        if suit.isHit(15) then data[lock] = 15 end --marin
+        if suit.isHit(16) then data[lock] = 16 end --bleu
+        if suit.isHit(17) then data[lock] = 17 end -- cyan
+        if suit.isHit(18) then data[lock] = 18 end --turquoise
+        if suit.isHit(19) then data[lock] = 19 end --vert
+        if suit.isHit(20) then data[lock] = 20 end -- vert-limon
+        if suit.isHit(21) then data[lock] = 21 end -- jaune
+        if suit.isHit(22) then data[lock] = 22 end --orange
+        if suit.isHit(23) then data[lock] = 23 end --marron
+        if suit.isHit(24) then data[lock] = 24 end --gris
         break
       end
   end
@@ -233,6 +238,8 @@ function updateStartMenu(dt)
   suit.Button("=>",1061,563,74,54)
   if suit.Button("New",1032,633,108,54).hit then
   dataReload()
+  data.sex = "homme"
+  data.class = "chevalier"
   menu_courant = "create_character"
 end
 if suit.Button("quit",867,633,108,54).hit then
@@ -277,40 +284,40 @@ function color(n)
    love.graphics.setColor(0,0,0)
  elseif n == 4 then
    love.graphics.setColor(255,255,255)
- elseif n == "rouge" then
+ elseif n == 13 then
    --rouge
    love.graphics.setColor(237,22,11)
- elseif n == "violet" then
+ elseif n == 14 then
    --violet
    love.graphics.setColor(189,22,201)
- elseif n == "marin" then 
+ elseif n == 15 then 
    --marin
    love.graphics.setColor(19,62,87)
- elseif n == "bleu" then 
+ elseif n == 16 then 
    --bleu
    love.graphics.setColor(31,21,232)
- elseif n == "cyan" then 
+ elseif n == 17 then 
    --cyan
    love.graphics.setColor(33,197,227)
- elseif n == "turquoise" then 
+ elseif n == 18 then 
    --turquoise
    love.graphics.setColor(33,227,167)
- elseif n == "vert" then 
+ elseif n == 19 then 
    --vert
    love.graphics.setColor(23,207,62)
- elseif n == "vert-limon" then 
+ elseif n == 20 then 
    --vert-limon
    love.graphics.setColor(181,218,24)
- elseif n == "jaune" then 
+ elseif n == 21 then 
    --jaune
    love.graphics.setColor(235,218,24)
- elseif n == "orange" then 
+ elseif n == 22 then 
    --orange
    love.graphics.setColor(221,125,23)
- elseif n == "marron" then 
+ elseif n == 23 then 
    --marron
    love.graphics.setColor(106,66,31)
- elseif n == "gris" then 
+ elseif n == 24 then 
    --gris
    love.graphics.setColor(126,126,126)
   end
