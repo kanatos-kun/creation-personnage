@@ -30,7 +30,66 @@ image = {
                  ("images/guerriere_stuff10.png"),
                  ("images/guerriere_stuff11.png"),
                  ("images/guerriere_stuff12.png"),
-                 ("images/guerriere_stuff13.png"),       --28 [archer homme]
+                 ("images/guerriere_stuff13.png"),        --28
+                 ("images/mage_m.png"),                   --29 [mage homme]
+                 ("images/mage_m_stuff_01.png"),       
+                 ("images/mage_m_stuff_02.png"),       
+                 ("images/mage_m_stuff_03.png"),       
+                 ("images/mage_m_stuff_04.png"),       
+                 ("images/mage_m_stuff_05.png"),       
+                 ("images/mage_m_stuff_06.png"),       
+                 ("images/mage_m_stuff_07.png"),       
+                 ("images/mage_m_stuff_08.png"),           --37  
+                 ("images/mage_f.png"),                    --38 [mage femme]
+                 ("images/mage_f_stuff01.png"),                 
+                 ("images/mage_f_stuff02.png"),                 
+                 ("images/mage_f_stuff03.png"),                 
+                 ("images/mage_f_stuff04.png"),                 
+                 ("images/mage_f_stuff05.png"),                 
+                 ("images/mage_f_stuff06.png"),                 
+                 ("images/mage_f_stuff07.png"),                 
+                 ("images/mage_f_stuff08.png"),           -- 46 
+                 ("images/archer_m.png"),           -- 47 [archer homme]              
+                 ("images/archer_m_stuff01.png"),              
+                 ("images/archer_m_stuff02.png"),              
+                 ("images/archer_m_stuff03.png"),              
+                 ("images/archer_m_stuff04.png"),              
+                 ("images/archer_m_stuff05.png"),              
+                 ("images/archer_m_stuff06.png"),              
+                 ("images/archer_m_stuff07.png"),              
+                 ("images/archer_m_stuff08.png"),              
+                 ("images/archer_m_stuff09.png"),              
+                 ("images/archer_m_stuff10.png"),              
+                 ("images/archer_m_stuff11.png"),              
+                 ("images/archer_m_stuff12.png"),              
+                 ("images/archer_m_stuff13.png"),              
+                 ("images/archer_m_stuff14.png"),       --61  
+                 ("images/archer_f.png"),               --62 [archer femme]
+                 ("images/archer_f_stuff01.png"),
+                 ("images/archer_f_stuff02.png"),
+                 ("images/archer_f_stuff03.png"),
+                 ("images/archer_f_stuff04.png"),
+                 ("images/archer_f_stuff05.png"),
+                 ("images/archer_f_stuff06.png"),
+                 ("images/archer_f_stuff07.png"),
+                 ("images/archer_f_stuff08.png"),
+                 ("images/archer_f_stuff09.png"),
+                 ("images/archer_f_stuff10.png"),        --72
+                 ("images/priest_m.png"),                --73 [pretre homme]
+                 ("images/priest_m_stuff01.png"), 
+                 ("images/priest_m_stuff02.png"), 
+                 ("images/priest_m_stuff03.png"), 
+                 ("images/priest_m_stuff04.png"), 
+                 ("images/priest_m_stuff05.png"), 
+                 ("images/priest_m_stuff06.png"),          --79
+                 ("images/priest_f.png"),                  --80 [pretre femme]
+                 ("images/priest_f_stuff01.png"),
+                 ("images/priest_f_stuff02.png"),
+                 ("images/priest_f_stuff03.png"),
+                 ("images/priest_f_stuff04.png"),
+                 ("images/priest_f_stuff05.png"),
+                 ("images/priest_f_stuff06.png"),
+                 ("images/priest_f_stuff07.png"),           --87
                 }  
               }
 
@@ -45,12 +104,12 @@ database.load = function()
 imgDatabase = {  
 guerrierM = {},
 guerrierF = {},
-archerM   = {love.graphics.newImage("images/archer_m.png")},
-archerF   = {love.graphics.newImage("images/archer_f.png")},
-mageM     = {love.graphics.newImage("images/mage_m.png")},
-mageF     = {love.graphics.newImage("images/mage_f.png")},
-pretreM   = {love.graphics.newImage("images/priest_m.png")},
-pretreF   = {love.graphics.newImage("images/priest_f.png")},
+archerM   = {},
+archerF   = {},
+mageM     = {},
+mageF     = {},
+pretreM   = {},
+pretreF   = {},
 }
 
 end
@@ -82,8 +141,51 @@ database.loadUpdate = function (dt)
                      nPlus = n + 1
                   end
                 end 
+
+                if nPlus == 29 then
+                  for n = 29,37 do 
+                     table.insert(imgDatabase.mageM,love.graphics.newImage(image.nom[n]))
+                     nPlus = n + 1
+                  end
+                end 
+
+                if nPlus == 38 then
+                  for n = 38,46 do 
+                     table.insert(imgDatabase.mageF,love.graphics.newImage(image.nom[n]))
+                     nPlus = n + 1
+                  end
+                end 
+
+                if nPlus == 47 then
+                  for n = 47,61 do 
+                     table.insert(imgDatabase.archerM,love.graphics.newImage(image.nom[n]))
+                     nPlus = n + 1
+                  end
+                end 
+
+                if nPlus == 62 then
+                  for n = 62,72 do 
+                     table.insert(imgDatabase.archerF,love.graphics.newImage(image.nom[n]))
+                     nPlus = n + 1
+                  end
+                end 
+
+                if nPlus == 73 then
+                  for n = 73,79 do 
+                     table.insert(imgDatabase.pretreM,love.graphics.newImage(image.nom[n]))
+                     nPlus = n + 1
+                  end
+                end  
+
+                if nPlus == 80 then
+                  for n = 80,87 do 
+                     table.insert(imgDatabase.pretreF,love.graphics.newImage(image.nom[n]))
+                     nPlus = n + 1
+                  end
+                end  
+
 -- Le dernier chiffre qui ferme le chargement des images
-              if nPlus == 29 then
+              if nPlus == 88 then
                image.load = false
               end
         end
@@ -117,21 +219,34 @@ database.drawChara = function()
         color ( 4 )
     end
   elseif data.sex == "homme" and data.class == "archer" then
-  love.graphics.draw(imgDatabase.archerM[1],420,130)
+    for n = 1,#imgDatabase.archerM do
+  love.graphics.draw(imgDatabase.archerM[n],420,130)
+    end
 elseif data.sex == "homme" and data.class == "mage" then
-  love.graphics.draw(imgDatabase.mageM[1],400,120)
+    for n = 1,#imgDatabase.mageM do
+  love.graphics.draw(imgDatabase.mageM[n],400,120)
+    end
 elseif data.sex == "homme" and data.class == "pretre" then 
-  love.graphics.draw(imgDatabase.pretreM[1],470,105)
+    for n = 1,#imgDatabase.pretreM do
+  love.graphics.draw(imgDatabase.pretreM[n],470,105)
+    end
   elseif data.sex == "femme" and data.class == "chevalier" then
   for n = 1 , #imgDatabase.guerrierF do
   love.graphics.draw(imgDatabase.guerrierF[n],380,140)
   end
 elseif data.sex == "femme" and data.class == "archer" then
-  love.graphics.draw(imgDatabase.archerF[1],450,105)
+    for n = 1,#imgDatabase.archerF do
+  love.graphics.draw(imgDatabase.archerF[n],450,105)
+    end
 elseif data.sex == "femme" and data.class == "mage" then
-  love.graphics.draw(imgDatabase.mageF[1],420,140)
+    for n = 1,#imgDatabase.mageF do
+  love.graphics.draw(imgDatabase.mageF[n],420,140)
+    end
 elseif data.sex == "femme" and data.class == "pretre" then
-  love.graphics.draw(imgDatabase.pretreF[1],430,140)
+    for n = 1,#imgDatabase.pretreF do
+  love.graphics.draw(imgDatabase.pretreF[n],430,140)
+
+    end
   end
 end
 
