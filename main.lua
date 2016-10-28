@@ -49,7 +49,7 @@ local imgButton = {
 }
 local button_state = "" --"face", "outfit","nose","mouth","hairCut","eye"
 local debug = false
-local menu_courant = "start_menu" -- "start_menu", "create_character"
+menu_courant = "start_menu" -- "start_menu", "create_character" , "load"
 lock = ""
 local quit = true
 -- Suit local
@@ -237,10 +237,7 @@ function updateStartMenu(dt)
   suit.Button("Load",948,563,108,54)
   suit.Button("=>",1061,563,74,54)
   if suit.Button("New",1032,633,108,54).hit then
-  dataReload()
-  data.sex = "homme"
-  data.class = "chevalier"
-  menu_courant = "create_character"
+  menu_courant = "load"
 end
 if suit.Button("quit",867,633,108,54).hit then
 love.quit()
@@ -257,6 +254,7 @@ end
 function updateSuit(dt)
   if menu_courant == "start_menu" then
   updateStartMenu()
+  elseif menu_courant == "load" then
   elseif menu_courant == "create_character" then
   updateCreateCharacter()
   end
@@ -272,6 +270,7 @@ function love.keypressed(key)
 end
 
 function love.update(dt)
+  database.update(dt)
   updateSuit(dt) 
 end
 
