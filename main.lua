@@ -45,8 +45,34 @@ local imgButton = {
   pretre    = {
                (love.graphics.newImage("images/bouton_pretre.png")),
                (love.graphics.newImage("images/bouton_hover_pretre.png")),
-              }
+              },
+  body      = {
+               (love.graphics.newImage("images/bouton_body.png")),
+               (love.graphics.newImage("images/bouton_body_hover.png")),
+              },
+  hair      = {
+               (love.graphics.newImage("images/bouton_hair.png")),
+               (love.graphics.newImage("images/bouton_hair_hover.png")),
+              },
+  eye       = {
+               (love.graphics.newImage("images/bouton_eye.png")),
+               (love.graphics.newImage("images/bouton_eye_hover.png")),
+              },
+  vetement  = {
+               (love.graphics.newImage("images/bouton_vetement.png")),
+               (love.graphics.newImage("images/bouton_vetement_hover.png")),
+              },
+  retour    = {
+               (love.graphics.newImage("images/bouton_retour.png")),
+               (love.graphics.newImage("images/bouton_retour_hover.png")),
+              },
+  head      = {
+               (love.graphics.newImage("images/bouton_head.png")),
+               (love.graphics.newImage("images/bouton_head_hover.png")),
+              },
+  color      = {}              
 }
+
 local button_state = "" --"face", "outfit","nose","mouth","hairCut","eye"
 local debug = false
 menu_courant = "start_menu" -- "start_menu", "create_character" , "load"
@@ -60,6 +86,16 @@ local input = {text = ""}
 function love.load()
   database.load()
   dataReload()
+  local nColor
+  for nColor= 1,9 do
+    table.insert(imgButton.color,love.graphics.newImage("images/bouton_circle0"..nColor..".png"))
+    table.insert(imgButton.color,love.graphics.newImage("images/bouton_circle0"..nColor.."_hover.png"))
+  end
+  for nColor= 10,20 do
+    table.insert(imgButton.color,love.graphics.newImage("images/bouton_circle"..nColor..".png"))
+    table.insert(imgButton.color,love.graphics.newImage("images/bouton_circle"..nColor.."_hover.png"))
+  end
+
   largeur = love.graphics.getWidth()
   hauteur = love.graphics.getHeight()
 end
@@ -73,6 +109,7 @@ data = {
     cut = "",
     color = "" 
   },
+  eye   = "",
   vet01 = "",
   vet02 = "",
   vet03 = "",
@@ -89,70 +126,134 @@ function updateCreateCharacter(dt)
    color ( 4 )
   if suit.ImageButton(imgButton.knight[1],{hovered = imgButton.knight[2]}, 59, 150).hit then
     data.class = "chevalier"
-    show_message = 1
   end
   if suit.ImageButton(imgButton.archer[1],{hovered = imgButton.archer[2]}, 128, 150).hit then
     data.class = "archer"
-    show_message = 2
   end
   if suit.ImageButton(imgButton.mage[1],{hovered = imgButton.mage[2]}, 198, 150).hit then
     data.class = "mage"
-    show_message = 3
   end
   if suit.ImageButton(imgButton.pretre[1],{hovered = imgButton.pretre[2]}, 268, 150).hit then
     data.class = "pretre"
-    show_message = 4
   end
   if suit.ImageButton(imgButton.sex_men[1],{hovered =imgButton.sex_men[2]}, 104, 36).hit then
     data.sex = "homme"
-    show_message = 5
   end
     if suit.ImageButton(imgButton.sex_women[1],{hovered =imgButton.sex_women[2]}, 197, 36).hit then
     data.sex = "femme"
-    show_message = 6
   end
-  -- customisation 
-suit.Button("corps",100,299,57,60) 
+  -- customisation
 
-if suit.Button("face",168,299,57,60).hit then
-lock = "vet01"
-end
 
-if suit.Button("vetement",234,299,57,60).hit then
-lock = "vet02"
-end
+if button_state == "" then
+-- Si on retourne au début--------------------------
+suit.ImageButton(imgButton.body[1],{hovered = imgButton.body[2]},100,299) 
 
+  if suit.ImageButton(imgButton.head[1],{hovered = imgButton.head[2]},168,299).hit then
+  button_state ="face"
+  end
+
+  if suit.ImageButton(imgButton.vetement[1],{hovered = imgButton.vetement[2]},234,299).hit then
+    button_state ="outfit"
+  end
+  
+-----------------------------------------------------
+  
 -- Si on clique sur le bouton vetement---------------
-if button_state == "outfit" then
-  if suit.Button("vetement",100,365,57,60).hit then
+elseif button_state == "outfit" then
+  if suit.ImageButton(imgButton.retour[1],{hovered = imgButton.retour[2]},234,367).hit then
+  button_state = ""
+  lock = ""
+end
+
+    if suit.ImageButton(imgButton.vetement[1],{hovered = imgButton.vetement[2],id=200},100,299).hit then
+  lock = "vet01"
+  end
+
+    if suit.ImageButton(imgButton.vetement[1],{hovered = imgButton.vetement[2],id=201},234,299).hit then
+  lock = "vet02"
+end
+
+    if suit.ImageButton(imgButton.vetement[1],{hovered = imgButton.vetement[2],id=202},168,299).hit then
   lock = "vet03"
   end
+-----------------------------------------------------
 
-  if suit.Button("Vetement 4",170,365,57,60).hit then
-  lock = "vet04"
+
+----placer d'autre état de button ici ---------------
+
+-----------------------------------------------------
+
+-- Si on clique sur le bouton body-------------------
+elseif button_state == "body" then
+
+
+-----------------------------------------------------
+
+-- Si on clique sur le bouton eye-------------------
+elseif button_state == "eye" then
+
+-----------------------------------------------------
+
+-- Si on clique sur le bouton hair-------------------
+elseif button_state == "hair" then
+  if suit.ImageButton(imgButton.hair[1],{hovered = imgButton.hair[2],id=203},100,299).hit then
+  lock = "hair"
+  end
+
+  if suit.ImageButton(imgButton.hair[1],{hovered = imgButton.hair[2],id=204},168,299).hit then
+  lock = "hair"
+  end
+
+  if suit.ImageButton(imgButton.hair[1],{hovered = imgButton.hair[2],id=205},234,299).hit then
+  lock = "hair"
+  end
+
+  if suit.ImageButton(imgButton.retour[1],{hovered = imgButton.retour[2]},234,367).hit then
+  button_state = "face"
+  lock = ""
+  end
+-----------------------------------------------------
+-- Si on clique sur le bouton face-------------------
+elseif button_state == "face" then
+
+  if suit.ImageButton(imgButton.hair[1],{hovered = imgButton.hair[2]},100,299).hit then
+    button_state = "hair"
+  end
+
+  if suit.ImageButton(imgButton.eye[1],{hovered = imgButton.eye[2]},168,299).hit then
+  lock = "eye"
+  end
+
+  if suit.ImageButton(imgButton.retour[1],{hovered = imgButton.retour[2]},234,367).hit then
+  button_state = ""
   end
 end
 -----------------------------------------------------
 
--- suit.Button("Retour",{id= 2},234,365,57,60) 
+
 
 -- couleur
 if button_state == "" then
 else
-suit.Button("Rouge",{id=13},61,496,57,60) --rouge
-suit.Button("Violet",{id=14},130,496,57,60) --violet
-suit.Button("Marin",{id=15},195,496,57,60) -- marin
-suit.Button("bleu",{id=16},263,496,57,60) -- bleu
+suit.ImageButton(imgButton.color[1],{hovered=imgButton.color[2], id=13},54,510) --rouge
+suit.ImageButton(imgButton.color[3],{hovered=imgButton.color[4],id=14},110,510) --violet
+suit.ImageButton(imgButton.color[5],{hovered=imgButton.color[6],id=15},166,510) -- marin
+suit.ImageButton(imgButton.color[7],{hovered=imgButton.color[8],id=16},222,510) -- bleu
+suit.ImageButton(imgButton.color[9],{hovered=imgButton.color[10],id=17},278,510) -- bleu
 
-suit.Button("Cyan",{id=17},61,562,57,60) -- cyan
-suit.Button("Turquoise",{id=18},130,562,57,60) -- turquoise
-suit.Button("vert",{id=19},195,562,57,60) -- vert
-suit.Button("vert-limon",{id=20},263,562,57,60) -- vert-jaune
+suit.ImageButton(imgButton.color[11],{hovered=imgButton.color[12],id=18},54,563) -- cyan
+suit.ImageButton(imgButton.color[13],{hovered=imgButton.color[14],id=19},110,563) -- turquoise
+suit.ImageButton(imgButton.color[15],{hovered=imgButton.color[16],id=20},166,563) -- vert
+suit.ImageButton(imgButton.color[17],{hovered=imgButton.color[18],id=21},222,563) -- vert-jaune
+suit.ImageButton(imgButton.color[19],{hovered=imgButton.color[20],id=22},278,563) -- bleu
 
-suit.Button("jaune",{id=21},61,627,57,60) -- jaune
-suit.Button("orange",{id=22},130,627,57,60) -- orange
-suit.Button("marron",{id=23},195,627,57,60) -- marron
-suit.Button("gris",{id=24},263,627,57,60) -- gris
+suit.ImageButton(imgButton.color[21],{hovered=imgButton.color[22],id=23},54,616) -- jaune
+suit.ImageButton(imgButton.color[23],{hovered=imgButton.color[24],id=24},110,616) -- orange
+suit.ImageButton(imgButton.color[25],{hovered=imgButton.color[26],id=25},166,616) -- marron
+suit.ImageButton(imgButton.color[27],{hovered=imgButton.color[28],id=26},222,616) -- gris
+suit.ImageButton(imgButton.color[29],{hovered=imgButton.color[30],id=27},278,616) -- bleu
+
 end
 if suit.isHit(13) or suit.isHit(14) or
    suit.isHit(15) or suit.isHit(16) or
@@ -182,12 +283,14 @@ end
 -- bouton retour et accepter
 if suit.Button("Retour",{id = 1},827,640,133,34).hit then
 dataReload()
+button_state = ""
 menu_courant = "start_menu"
 end
 if suit.Button("Accepter",998,640,133,34).hit then
 -- sauvegarde des données
 data.name = input.text
 dataReload()
+button_state = ""
 menu_courant = "start_menu"
 end
 -- Bouton statistique
@@ -205,19 +308,6 @@ suit.Button("+",{id =12},1119,382,14,14)
 -- Choix du nom du personnage
 suit.Input(input,543,638,132,36)
 
-      if show_message == 1 then
-        suit.Label("Classe guerrier choisis", 840,58, 244,26)
-      elseif show_message == 2 then
-        suit.Label("Classe archer choisis", 840,58, 244,26)
-      elseif show_message == 3 then
-        suit.Label("Classe mage choisis", 840,58, 244,26)
-      elseif show_message == 4 then
-        suit.Label("Classe prêtre choisis", 840,58, 244,26)
-      elseif show_message == 5 then
-        suit.Label("Sexe homme choisis", 840,58, 244,26)
-      elseif show_message == 6 then
-        suit.Label("Sexe femme choisis", 840,58, 244,26)        
-    end
 end
 
 function love.quit()

@@ -89,7 +89,36 @@ image = {
                  ("images/priest_f_stuff04.png"),
                  ("images/priest_f_stuff05.png"),
                  ("images/priest_f_stuff06.png"),
-                 ("images/priest_f_stuff07.png"),           --87
+                 ("images/priest_f_stuff07.png"),        --87
+ 
+                 ("images/guerrier_hair01.png"),         --88
+                 ("images/guerrier_hair02.png"), 
+                 ("images/guerrier_eye.png"), 
+                 ("images/guerriere_hair01.png"), 
+                 ("images/guerriere_hair02.png"), 
+                 ("images/guerriere_eye.png"),           --93
+
+                 ("images/mage_m_hair01.png"),           --94
+                 ("images/mage_m_hair02.png"), 
+                 ("images/mage_m_eye.png"), 
+                 ("images/mage_f_hair01.png"), 
+                 ("images/mage_f_hair02.png"), 
+                 ("images/mage_f_eye.png"),             --99
+
+                 ("images/archer_m_hair01.png"),        --100
+                 ("images/archer_m_hair02.png"), 
+                 ("images/archer_m_eye.png"), 
+                 ("images/archer_f_hair01.png"), 
+                 ("images/archer_f_hair02.png"), 
+                 ("images/archer_f_eye.png"),           --105
+
+                 ("images/priest_m_hair01.png"),        --106
+                 ("images/priest_m_hair02.png"), 
+                 ("images/priest_m_eye.png"), 
+                 ("images/priest_f_hair01.png"), 
+                 ("images/priest_f_hair02.png"), 
+                 ("images/priest_f_eye.png"),          --111
+
                 }  
               }
 
@@ -102,14 +131,14 @@ database.load = function()
   
 
 imgDatabase = {  
-guerrierM = {},
-guerrierF = {},
-archerM   = {},
-archerF   = {},
-mageM     = {},
-mageF     = {},
-pretreM   = {},
-pretreF   = {},
+guerrierM = {hair = {},eye ={}},
+guerrierF = {hair = {},eye ={}},
+archerM   = {hair = {},eye ={}},
+archerF   = {hair = {},eye ={}},
+mageM     = {hair = {},eye ={}},
+mageF     = {hair = {},eye ={}},
+pretreM   = {hair = {},eye ={}},
+pretreF   = {hair = {},eye ={}},
 }
 
 end
@@ -184,8 +213,105 @@ database.loadUpdate = function (dt)
                   end
                 end  
 
--- Le dernier chiffre qui ferme le chargement des images
-              if nPlus == 88 then
+                if nPlus == 88 then
+                  for n = 88,89 do 
+                     table.insert(imgDatabase.guerrierM.hair,love.graphics.newImage(image.nom[n]))
+                     nPlus = n + 1
+                  end
+                end
+                
+                if nPlus == 89 then
+                     table.insert(imgDatabase.guerrierM.eye,love.graphics.newImage(image.nom[nPlus]))
+                     nPlus = n + 1
+                end
+                
+                if nPlus == 90 then
+                  for n = 90,91 do 
+                     table.insert(imgDatabase.guerrierF.hair,love.graphics.newImage(image.nom[n]))
+                     nPlus = n + 1
+                  end
+                end
+                
+                if nPlus == 92 then
+                     table.insert(imgDatabase.guerrierF.eye,love.graphics.newImage(image.nom[nPlus]))
+                     nPlus = nPlus + 1
+                end
+
+                if nPlus == 93 then
+                  for n = 93,94 do 
+                     table.insert(imgDatabase.mageM.hair,love.graphics.newImage(image.nom[n]))
+                     nPlus = n + 1
+                  end
+                end
+                
+                if nPlus == 95 then
+                     table.insert(imgDatabase.mageM.eye,love.graphics.newImage(image.nom[nPlus]))
+                     nPlus = nPlus + 1
+                end
+ 
+                 if nPlus == 96 then
+                  for n = 96,97 do 
+                     table.insert(imgDatabase.mageF.hair,love.graphics.newImage(image.nom[n]))
+                     nPlus = n + 1
+                  end
+                end
+
+                if nPlus == 98 then
+                     table.insert(imgDatabase.mageF.eye,love.graphics.newImage(image.nom[nPlus]))
+                     nPlus = nPlus + 1
+                end
+
+ 
+                 if nPlus == 99 then
+                  for n = 99,100 do 
+                     table.insert(imgDatabase.archerM.hair,love.graphics.newImage(image.nom[n]))
+                     nPlus = n + 1
+                  end
+                end
+
+                if nPlus == 101 then
+                     table.insert(imgDatabase.archerM.eye,love.graphics.newImage(image.nom[nPlus]))
+                     nPlus = nPlus + 1
+                end
+
+                 if nPlus == 102 then
+                  for n = 102,103 do 
+                     table.insert(imgDatabase.archerF.hair,love.graphics.newImage(image.nom[n]))
+                     nPlus = n + 1
+                  end
+                end
+
+                if nPlus == 104 then
+                     table.insert(imgDatabase.archerF.eye,love.graphics.newImage(image.nom[nPlus]))
+                     nPlus = nPlus + 1
+                end
+
+                if nPlus == 105 then
+                  for n = 106,107 do 
+                     table.insert(imgDatabase.pretreM.hair,love.graphics.newImage(image.nom[n]))
+                     nPlus = n + 1
+                  end
+                end
+
+                if nPlus == 108 then
+                     table.insert(imgDatabase.pretreM.eye,love.graphics.newImage(image.nom[nPlus]))
+                     nPlus = nPlus + 1
+                end
+
+                if nPlus == 109 then
+                  for n = 109,110 do 
+                     table.insert(imgDatabase.pretreF.hair,love.graphics.newImage(image.nom[n]))
+                     nPlus = n + 1
+                  end
+                end
+
+                if nPlus == 111 then
+                     table.insert(imgDatabase.pretreF.eye,love.graphics.newImage(image.nom[nPlus]))
+                     nPlus = nPlus + 1
+                end
+  
+-- Le dernier chiffre ferme le chargement des images
+              if nPlus == 112 then
                image.load = false
               end
         end
