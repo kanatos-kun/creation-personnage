@@ -306,6 +306,14 @@ database.loadUpdate = function (dt)
 
                 if nPlus == 111 then
                      table.insert(imgDatabase.pretreF.eye,love.graphics.newImage(image.nom[nPlus]))
+                     table.insert(imgDatabase.guerrierM.eye,love.graphics.newImage("images/guerrier_eye02.png"))
+                     table.insert(imgDatabase.guerrierF.eye,love.graphics.newImage("images/guerriere_eye02.png"))
+                     table.insert(imgDatabase.archerM.eye,love.graphics.newImage("images/archer_m_eye02.png"))
+                     table.insert(imgDatabase.archerF.eye,love.graphics.newImage("images/archer_f_eye02.png"))
+                     table.insert(imgDatabase.mageM.eye,love.graphics.newImage("images/mage_m_eye02.png"))
+                     table.insert(imgDatabase.mageF.eye,love.graphics.newImage("images/mage_f_eye02.png"))
+                     table.insert(imgDatabase.pretreM.eye,love.graphics.newImage("images/priest_m_eye02.png"))
+                     table.insert(imgDatabase.pretreF.eye,love.graphics.newImage("images/priest_f_eye02.png"))
                      nPlus = nPlus + 1
                 end
   
@@ -339,6 +347,11 @@ local eye = data.eye
   if data.sex == "homme" and data.class == "chevalier" then
     for n = 1,#imgDatabase.guerrierM do
       --changement de couleur des vetements
+
+      if data.body == data.body and n == 1 then
+      color ( data.body)
+    end
+
       if data.vet01 == data.vet01 and n == 4 or n == 9 then 
         color ( data.vet01 )
       end 
@@ -352,13 +365,14 @@ local eye = data.eye
       if n == 2 or n == 14 then
         color ( 1)
       end
-      
+  
   love.graphics.draw(imgDatabase.guerrierM[n],400,160)
-  love.graphics.draw(imgDatabase.guerrierM.hair[hairCut],400,160)
-  love.graphics.draw(imgDatabase.guerrierM.eye[1],400,160)
 
         color ( 4 )
     end
+  love.graphics.draw(imgDatabase.guerrierM.eye[2],400,160)
+  love.graphics.draw(imgDatabase.guerrierM.eye[1],400,160)
+  love.graphics.draw(imgDatabase.guerrierM.hair[hairCut],400,160)
   elseif data.sex == "homme" and data.class == "archer" then
     for n = 1,#imgDatabase.archerM do
 
@@ -384,13 +398,18 @@ local eye = data.eye
       color ( 30 )  
       end 
   love.graphics.draw(imgDatabase.archerM[n],420,130)
-  love.graphics.draw(imgDatabase.archerM.hair[hairCut],420,130)
-  love.graphics.draw(imgDatabase.archerM.eye[1],420,130)
 
         color ( 4 )
     end
+  love.graphics.draw(imgDatabase.archerM.eye[2],420,130)
+  love.graphics.draw(imgDatabase.archerM.eye[1],420,130)
+  love.graphics.draw(imgDatabase.archerM.hair[hairCut],420,130)
 elseif data.sex == "homme" and data.class == "mage" then
     for n = 1,#imgDatabase.mageM do
+
+      if data.body == data.body and n == 1 then
+      color ( data.body)
+    end
 
       if data.vet01 == data.vet01 and n == 2 or n == 5 or
          n == 7  then 
@@ -406,13 +425,18 @@ elseif data.sex == "homme" and data.class == "mage" then
       color( 30 )
       end
   love.graphics.draw(imgDatabase.mageM[n],400,120)
-  love.graphics.draw(imgDatabase.mageM.hair[hairCut],400,120)
-  love.graphics.draw(imgDatabase.mageM.eye[1],400,120)
 
         color ( 4 )
     end
+  love.graphics.draw(imgDatabase.mageM.eye[2],400,120)
+  love.graphics.draw(imgDatabase.mageM.eye[1],400,120)
+  love.graphics.draw(imgDatabase.mageM.hair[hairCut],400,120)
 elseif data.sex == "homme" and data.class == "pretre" then 
     for n = 1,#imgDatabase.pretreM do
+
+      if data.body == data.body and n == 1 then
+      color ( data.body)
+    end
 
       if data.vet01 == data.vet01 and n == 2 or n == 7  then 
         color ( data.vet01 )
@@ -431,13 +455,18 @@ elseif data.sex == "homme" and data.class == "pretre" then
       end
       
   love.graphics.draw(imgDatabase.pretreM[n],470,105)
-  love.graphics.draw(imgDatabase.pretreM.hair[hairCut],470,105)
-  love.graphics.draw(imgDatabase.pretreM.eye[1],470,105)
 
         color ( 4 )
     end
+  love.graphics.draw(imgDatabase.pretreM.eye[2],470,105)
+  love.graphics.draw(imgDatabase.pretreM.eye[1],470,105)
+  love.graphics.draw(imgDatabase.pretreM.hair[hairCut],470,105)
   elseif data.sex == "femme" and data.class == "chevalier" then
   for n = 1 , #imgDatabase.guerrierF do
+
+      if data.body == data.body and n == 1 then
+      color ( data.body)
+    end
 
       if data.vet01 == data.vet01 and n == 8 or n == 10 or
          n == 11                                      then 
@@ -453,14 +482,18 @@ elseif data.sex == "homme" and data.class == "pretre" then
     color ( 1 )
     end
   love.graphics.draw(imgDatabase.guerrierF[n],380,140)
-  love.graphics.draw(imgDatabase.guerrierF.hair[hairCut],380,140)
-  love.graphics.draw(imgDatabase.guerrierF.eye[1],380,140)
-
         color ( 4 )
   end
+  love.graphics.draw(imgDatabase.guerrierF.eye[2],380,140)
+  love.graphics.draw(imgDatabase.guerrierF.eye[1],380,140)
+  love.graphics.draw(imgDatabase.guerrierF.hair[hairCut],380,140)
 elseif data.sex == "femme" and data.class == "archer" then
     for n = 1,#imgDatabase.archerF do
       
+      if data.body == data.body and n == 1 then
+      color ( data.body)
+    end
+
       if data.vet01 == data.vet01 and n == 2 or n == 3 or n == 10 then 
         color ( data.vet01 )
       end 
@@ -482,14 +515,18 @@ elseif data.sex == "femme" and data.class == "archer" then
     end
  
   love.graphics.draw(imgDatabase.archerF[n],450,105)
-  love.graphics.draw(imgDatabase.archerF.hair[hairCut],450,105)
-  love.graphics.draw(imgDatabase.archerF.eye[1],450,105)
-
         color ( 4 )
     end
+  love.graphics.draw(imgDatabase.archerF.eye[2],450,105)
+  love.graphics.draw(imgDatabase.archerF.eye[1],450,105)
+  love.graphics.draw(imgDatabase.archerF.hair[hairCut],450,105)
 elseif data.sex == "femme" and data.class == "mage" then
     for n = 1,#imgDatabase.mageF do
-      
+
+      if data.body == data.body and n == 1 then
+      color ( data.body)
+    end
+
       if data.vet01 == data.vet01 and n == 2 or n == 6 then 
         color ( data.vet01 )
       end 
@@ -503,13 +540,18 @@ elseif data.sex == "femme" and data.class == "mage" then
      end
      
   love.graphics.draw(imgDatabase.mageF[n],420,140)
-  love.graphics.draw(imgDatabase.mageF.hair[hairCut],420,140)
-  love.graphics.draw(imgDatabase.mageF.eye[1],420,140)
 
         color ( 4 )
     end
+  love.graphics.draw(imgDatabase.mageF.eye[2],420,140)
+  love.graphics.draw(imgDatabase.mageF.eye[1],420,140)
+  love.graphics.draw(imgDatabase.mageF.hair[hairCut],420,140)
 elseif data.sex == "femme" and data.class == "pretre" then
     for n = 1,#imgDatabase.pretreF do
+
+      if data.body == data.body and n == 1 then
+      color ( data.body)
+    end
 
       if data.vet01 == data.vet01 and n == 3 or n == 8 then 
         color ( data.vet01 )
@@ -528,10 +570,12 @@ elseif data.sex == "femme" and data.class == "pretre" then
       end
       
   love.graphics.draw(imgDatabase.pretreF[n],430,140)
-  love.graphics.draw(imgDatabase.pretreF.hair[hairCut],430,140)
-  love.graphics.draw(imgDatabase.pretreF.eye[1],430,140)
+
         color ( 4 )
     end
+  love.graphics.draw(imgDatabase.pretreF.eye[2],430,140)
+  love.graphics.draw(imgDatabase.pretreF.eye[1],430,140)
+  love.graphics.draw(imgDatabase.pretreF.hair[hairCut],430,140)
   end
 end
 

@@ -83,7 +83,7 @@ local imgButton = {
 }
 
 local button_state = "" --"face", "outfit","nose","mouth","hairCut","eye"
-local debug = true
+local debug = false
 menu_courant = "start_menu" -- "start_menu", "create_character" , "load"
 lock = ""
 local quit = true
@@ -114,7 +114,7 @@ data = {
   name = "",
   sex = "",
   class = "",
-  body = "",
+  body = 31,
   hair = {
     cut = 1,
     color = "" 
@@ -185,10 +185,6 @@ end
 
     if suit.ImageButton(imgButton.vetement[1],{hovered = imgButton.vetement[2],id=202},168,299).hit then
   lock = "vet02"
-end
-
-    if suit.ImageButton(imgButton.vetement[1],{hovered = imgButton.vetement[2],id=201},234,299).hit then
-  lock = "vet03"
 end
 -----------------------------------------------------
 
