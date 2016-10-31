@@ -17,11 +17,14 @@ pC = { "vet01",
        "vet02",
        "vet03",
        "vet04",
-       "hair.cut",
-       "hair.color",
-       "body",}
+       "hairCut",
+       "hairColor",
+       "body",
+       "eye",}
 --local
+local sonButton = love.audio.newSource("sons/open_button.wav","static")
 local imgDrawBackGUIChara = love.graphics.newImage("images/backGUI_character.png")
+local imgDrawBackGUIStartMenu = love.graphics.newImage("images/backGUI_menu_start.png")
 local imgButton = {
   sex_women = {
               (love.graphics.newImage("images/bouton_fem.png")),
@@ -80,6 +83,38 @@ local imgButton = {
                (love.graphics.newImage("images/bouton_plus.png")),
                (love.graphics.newImage("images/bouton_plus_hover.png")),
               },
+  characterChoice = {
+               (love.graphics.newImage("images/bouton_choix_character.png")),
+               (love.graphics.newImage("images/bouton_choix_character_hover.png")),
+              },
+  new = {
+               (love.graphics.newImage("images/bouton_new.png")),
+               (love.graphics.newImage("images/bouton_new_hover.png")),
+              },
+  quit = {
+               (love.graphics.newImage("images/bouton_quit.png")),
+               (love.graphics.newImage("images/bouton_quit_hover.png")),
+              },
+  ["load"] = {
+               (love.graphics.newImage("images/bouton_load.png")),
+               (love.graphics.newImage("images/bouton_load_hover.png")),
+              },
+  rightArrow = {
+               (love.graphics.newImage("images/bouton_fleche_droite.png")),
+               (love.graphics.newImage("images/bouton_fleche_droite_hover.png")),
+              },
+  leftArrow = {
+               (love.graphics.newImage("images/bouton_fleche_gauche.png")),
+               (love.graphics.newImage("images/bouton_fleche_gauche_hover.png")),
+              },
+  accept = {
+               (love.graphics.newImage("images/bouton_accept.png")),
+               (love.graphics.newImage("images/bouton_accept_hover.png")),
+              },
+  back = {
+               (love.graphics.newImage("images/bouton_back.png")),
+               (love.graphics.newImage("images/bouton_back_hover.png")),
+              },
 }
 
 local button_state = "" --"face", "outfit","nose","mouth","hairCut","eye"
@@ -100,7 +135,7 @@ function love.load()
     table.insert(imgButton.color,love.graphics.newImage("images/bouton_circle0"..nColor..".png"))
     table.insert(imgButton.color,love.graphics.newImage("images/bouton_circle0"..nColor.."_hover.png"))
   end
-  for nColor= 10,20 do
+  for nColor= 10,21 do
     table.insert(imgButton.color,love.graphics.newImage("images/bouton_circle"..nColor..".png"))
     table.insert(imgButton.color,love.graphics.newImage("images/bouton_circle"..nColor.."_hover.png"))
   end
@@ -115,21 +150,21 @@ data = {
   sex = "",
   class = "",
   body = 31,
-  hair = {
-    cut = 1,
-    color = "" 
-  },
-  eye   = 1,
+  hairCut = 1,
+  hairColor = 24,
+  eye   = 17,
   vet01 = 17,
   vet02 = 16,
   vet03 = "",
   vet04 = "",
-  str = "",
-  int = "",
-  agi = "",
-  endu = "",
-  dex = "",
-  }
+  str = 5,
+  int = 5,
+  agi = 5,
+  endu = 5,
+  dex = 5,
+  leftPoint = 10,
+}
+lock = ""
 end
 
 function updateCreateCharacter(dt)
@@ -209,13 +244,13 @@ elseif button_state == "eye" then
 -- Si on clique sur le bouton hair-------------------
 elseif button_state == "hair" then
   if suit.ImageButton(imgButton.hair[1],{hovered = imgButton.hair[2],id=203},100,299).hit then
-  data.hair.cut = 1
-  lock = "hair"
+  data.hairCut = 1
+  lock = "hairColor"
   end
 
   if suit.ImageButton(imgButton.hair[1],{hovered = imgButton.hair[2],id=204},168,299).hit then
- data.hair.cut = 2
-  lock = "hair"
+ data.hairCut = 2
+  lock = "hairColor"
   end
 
   if suit.ImageButton(imgButton.retour[1],{hovered = imgButton.retour[2]},234,367).hit then
@@ -228,6 +263,7 @@ elseif button_state == "face" then
 
   if suit.ImageButton(imgButton.hair[1],{hovered = imgButton.hair[2]},100,299).hit then
     button_state = "hair"
+    lock ="hairColor"
   end
 
   if suit.ImageButton(imgButton.eye[1],{hovered = imgButton.eye[2]},168,299).hit then
@@ -249,9 +285,12 @@ elseif button_state == "body" then
 suit.ImageButton(imgButton.color[31],{hovered=imgButton.color[32], id=28},54,510) 
 suit.ImageButton(imgButton.color[33],{hovered=imgButton.color[34],id=29},110,510) 
 suit.ImageButton(imgButton.color[35],{hovered=imgButton.color[36],id=30},166,510) 
-suit.ImageButton(imgButton.color[37],{hovered=imgButton.color[38],id=31},222,510) 
-suit.ImageButton(imgButton.color[39],{hovered=imgButton.color[40],id=32},278,510) 
+suit.ImageButton(imgButton.color[41],{hovered=imgButton.color[42],id=35},222,510) 
+suit.ImageButton(imgButton.color[37],{hovered=imgButton.color[38],id=31},278,510) 
 
+suit.ImageButton(imgButton.color[39],{hovered=imgButton.color[40],id=32},54,563) 
+-- 35 , 31, 32 id
+-- 42, 38, 40 color
 else
 suit.ImageButton(imgButton.color[1],{hovered=imgButton.color[2], id=13},54,510) 
 suit.ImageButton(imgButton.color[3],{hovered=imgButton.color[4],id=14},110,510) 
@@ -281,7 +320,8 @@ if suit.isHit(13) or suit.isHit(14) or
    suit.isHit(25) or suit.isHit(26) or
    suit.isHit(27) or suit.isHit(28) or
    suit.isHit(29) or suit.isHit(30) or   
-   suit.isHit(31) or suit.isHit(32) then
+   suit.isHit(31) or suit.isHit(32) or
+   suit.isHit(35) then
   for n = 1,#pC do 
       while pC[n] == lock do
         if suit.isHit(13) then data[lock] = 13 end 
@@ -304,18 +344,19 @@ if suit.isHit(13) or suit.isHit(14) or
         if suit.isHit(30) then data[lock] = 30 end 
         if suit.isHit(31) then data[lock] = 31 end 
         if suit.isHit(32) then data[lock] = 32 end 
+        if suit.isHit(35) then data[lock] = 35 end 
         break
       end
   end
 
 end
 -- bouton retour et accepter
-if suit.Button("Retour",{id = 1},827,640,133,34).hit then
+if suit.ImageButton(imgButton.back[1],{hovered =imgButton.back[2],id = 1},827,640).hit then
 dataReload()
 button_state = ""
 menu_courant = "start_menu"
 end
-if suit.Button("Accepter",998,640,133,34).hit then
+if suit.ImageButton(imgButton.accept[1],{hovered =imgButton.accept[2]},998,640).hit then
 -- sauvegarde des données
 data.name = input.text
 dataReload()
@@ -323,16 +364,96 @@ button_state = ""
 menu_courant = "start_menu"
 end
 -- Bouton statistique
-suit.ImageButton(imgButton.minus[1],{hovered =imgButton.minus[2],id =3},1064,240)
-suit.ImageButton(imgButton.plus[1],{hovered =imgButton.plus[2],id =4},1095,240)
-suit.ImageButton(imgButton.minus[1],{hovered =imgButton.minus[2],id =5},1064,271)
-suit.ImageButton(imgButton.plus[1],{hovered =imgButton.plus[2],id =6},1095,271)
-suit.ImageButton(imgButton.minus[1],{hovered =imgButton.minus[2],id =7},1064,302)
-suit.ImageButton(imgButton.plus[1],{hovered =imgButton.plus[2],id =8},1095,302)
-suit.ImageButton(imgButton.minus[1],{hovered =imgButton.minus[2],id =9},1064,331)
-suit.ImageButton(imgButton.plus[1],{hovered =imgButton.plus[2],id =10},1095,331)
-suit.ImageButton(imgButton.minus[1],{hovered =imgButton.minus[2],id =11},1064,361)
-suit.ImageButton(imgButton.plus[1],{hovered =imgButton.plus[2],id =12},1095,361)
+--===========================================================================================
+--                              strenght
+--===========================================================================================
+if suit.ImageButton(imgButton.minus[1],{hovered =imgButton.minus[2],id =3},1064,240).hit then
+  if data.str == 5 then
+  else
+data.leftPoint = data.leftPoint + 1
+data.str = data.str - 1
+  end
+end
+
+if suit.ImageButton(imgButton.plus[1],{hovered =imgButton.plus[2],id =4},1095,240).hit then
+  if data.leftPoint == 0 then
+  else 
+    data.leftPoint = data.leftPoint - 1
+    data.str = data.str + 1
+  end
+end
+--===========================================================================================
+--                             intelligence
+--===========================================================================================
+if suit.ImageButton(imgButton.minus[1],{hovered =imgButton.minus[2],id =5},1064,271).hit then
+    if data.int == 5 then
+  else
+data.leftPoint = data.leftPoint + 1
+data.int = data.int - 1
+  end
+end
+
+if suit.ImageButton(imgButton.plus[1],{hovered =imgButton.plus[2],id =6},1095,271).hit then
+    if data.leftPoint == 0 then
+  else 
+    data.leftPoint = data.leftPoint - 1
+    data.int= data.int + 1
+  end
+end
+--===========================================================================================
+--                            agilité
+--===========================================================================================
+if suit.ImageButton(imgButton.minus[1],{hovered =imgButton.minus[2],id =7},1064,302).hit then
+    if data.agi == 5 then
+  else
+data.leftPoint = data.leftPoint + 1
+data.agi = data.agi - 1
+  end
+end
+
+if suit.ImageButton(imgButton.plus[1],{hovered =imgButton.plus[2],id =8},1095,302).hit then
+    if data.leftPoint == 0 then
+  else 
+    data.leftPoint = data.leftPoint - 1
+    data.agi= data.agi + 1
+  end
+end
+--===========================================================================================
+--                          dexterité
+--===========================================================================================
+if suit.ImageButton(imgButton.minus[1],{hovered =imgButton.minus[2],id =9},1064,331).hit then
+    if data.dex == 5 then
+  else
+data.leftPoint = data.leftPoint + 1
+data.dex = data.dex - 1
+  end
+end
+
+if suit.ImageButton(imgButton.plus[1],{hovered =imgButton.plus[2],id =10},1095,331).hit then
+    if data.leftPoint == 0 then
+  else 
+    data.leftPoint = data.leftPoint - 1
+    data.dex = data.dex + 1
+  end
+end
+--===========================================================================================
+--                               endurance
+--===========================================================================================
+if suit.ImageButton(imgButton.minus[1],{hovered =imgButton.minus[2],id =11},1064,361).hit then
+    if data.str == 5 then
+  else
+data.leftPoint = data.leftPoint + 1
+data.endu = data.endu - 1
+  end
+end
+
+if suit.ImageButton(imgButton.plus[1],{hovered =imgButton.plus[2],id =12},1095,361).hit then
+    if data.leftPoint == 0 then
+  else 
+    data.leftPoint = data.leftPoint - 1
+    data.endu = data.endu + 1
+  end
+end
 
 -- Choix du nom du personnage
 suit.Input(input,543,638,132,36)
@@ -352,22 +473,22 @@ love.event.quit()
 end
 
 function updateStartMenu(dt)
-  suit.Button("<=",872,563,69,54)
-  suit.Button("Load",948,563,108,54)
-  suit.Button("=>",1061,563,74,54)
-  if suit.Button("New",1032,633,108,54).hit then
+  suit.ImageButton(imgButton.leftArrow[1],{hovered = imgButton.leftArrow[2] },872,563)
+  suit.ImageButton(imgButton.load[1],{hovered = imgButton.load[2] },948,563)
+  suit.ImageButton(imgButton.rightArrow[1],{hovered = imgButton.rightArrow[2] },1061,563)
+  if suit.ImageButton(imgButton.new[1],{hovered = imgButton.new[2] },1032,633).hit then
   menu_courant = "load"
 end
-if suit.Button("quit",867,633,108,54).hit then
+if suit.ImageButton(imgButton.quit[1],{hovered = imgButton.quit[2] },867,633).hit then
 love.quit()
 end
-  suit.Button("",{id=1},873,166,259,48)
-  suit.Button("",{id=2},873,220,259,48)
-  suit.Button("",{id=3},873,275,259,48)
-  suit.Button("",{id=4},873,329,259,48)
-  suit.Button("",{id=5},873,384,259,48)
-  suit.Button("",{id=6},873,437,259,48)
-  suit.Button("",{id=7},873,492,259,48)
+  suit.ImageButton(imgButton.characterChoice[1],{hovered =imgButton.characterChoice[2], id=1},873,176)
+  suit.ImageButton(imgButton.characterChoice[1],{hovered =imgButton.characterChoice[2],id=2},873,230)
+  suit.ImageButton(imgButton.characterChoice[1],{hovered =imgButton.characterChoice[2],id=3},873,285)
+  suit.ImageButton(imgButton.characterChoice[1],{hovered =imgButton.characterChoice[2],id=4},873,339)
+  suit.ImageButton(imgButton.characterChoice[1],{hovered =imgButton.characterChoice[2],id=5},873,394)
+  suit.ImageButton(imgButton.characterChoice[1],{hovered =imgButton.characterChoice[2],id=6},873,447)
+  suit.ImageButton(imgButton.characterChoice[1],{hovered =imgButton.characterChoice[2],id=7},873,502)
   end
 
 function updateSuit(dt)
@@ -391,6 +512,10 @@ end
 function love.update(dt)
   database.update(dt)
   updateSuit(dt) 
+  if suit.anyHit() then
+  sonButton:play()
+  end
+  
 end
 
 function color(n)
@@ -468,63 +593,30 @@ function color(n)
     elseif n == 34 then 
 
  love.graphics.setColor(42,198,212)
+    elseif n == 35 then 
+
+ love.graphics.setColor(241,212,185)
   end
 end
 
 function drawBackGuiStartMenu()
  --Draw rectangle GUI
-love.graphics.setLineWidth( 5 )
-color( 1 )
-love.graphics.rectangle("fill",864,131,280,494,10,10)
-color( 2 )
-love.graphics.rectangle("line",864,131,280,494,10,10)
-color( 1 )
-love.graphics.rectangle("fill",872,562,71,55)
-color( 2 )
-love.graphics.rectangle("line",872,562,71,55)
-color( 1 )
-love.graphics.rectangle("fill",1061,562,71,55)
-color( 2 )
-love.graphics.rectangle("line",1061,562,71,55)
-color( 1 )
-love.graphics.rectangle("fill",947,562,110,55)
-color( 2 )
-love.graphics.rectangle("line",947,562,110,55)
---quit
-color( 1 ) 
-love.graphics.rectangle("fill",867,633,108,57)
-color( 2 ) 
-love.graphics.rectangle("line",867,633,108,57)
---new
-color( 1 ) 
-love.graphics.rectangle("fill",1032,633,108,57)
-color( 2 ) 
-love.graphics.rectangle("line",1032,633,108,57)
---statistique
-color( 1 )
-love.graphics.rectangle("fill",92,304,307,211,10,10)
-color( 2 )
-love.graphics.rectangle("line",92,304,307,211,10,10)
-----
-love.graphics.rectangle("fill",92,324,307,6)
-love.graphics.rectangle("fill",92,357,307,6)
-love.graphics.rectangle("fill",92,487,307,6)
-color( 3 )
-love.graphics.print("Classe :",190,307)
-love.graphics.print("Statistique :",203,335)
-love.graphics.print("Force :",122,371)
-love.graphics.print("Intelligence :",122,390)
-love.graphics.print("Agilité :",122,411)
-love.graphics.print("Dextérité :",122,432)
-love.graphics.print("Endurance :",122,453)
-love.graphics.print("Level :",218,492)
-love.graphics.print("Character",979,141)
+color( 4 )
+love.graphics.draw(imgDrawBackGUIStartMenu,0,0)
 end
 
 function drawBackGuiCharacterCreate()
 -- Draw GUI 
 color ( 4 )
 love.graphics.draw(imgDrawBackGUIChara,0,0)
+color ( 3 )
+love.graphics.print(tostring(data.str),1011,245)
+love.graphics.print(tostring(data.int),1011,280)
+love.graphics.print(tostring(data.agi),1011,314)
+love.graphics.print(tostring(data.dex),1011,345)
+love.graphics.print(tostring(data.endu),1011,375)
+love.graphics.print(tostring(data.leftPoint),1040,420)
+color ( 4 )
 end
 
 function drawDebug()
@@ -533,9 +625,10 @@ function drawDebug()
   love.graphics.print("Name : "         ..data.name.."\n"..
                       "Sex : "         ..data.sex.."\n"..
                       "Class : "         ..data.class.."\n"..
-                      "hair-Cut :"..data.hair.cut.."\n"..
-                      "hair-Color :"..data.hair.color.."\n"..
+                      "hair-Cut :"..data.hairCut.."\n"..
+                      "hair-Color :"..data.hairColor.."\n"..
                       "body :"..data.body.."\n"..
+                      "eye :"..data.eye.."\n"..
                       "vet01 :"..data.vet01.."\n"..
                       "vet02 :"..data.vet02.."\n"..
                       "vet03 :"..data.vet03.."\n"..
